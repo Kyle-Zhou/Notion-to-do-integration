@@ -2,11 +2,11 @@ const { Client } = require('@notionhq/client');
 
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 
-let year = 2024;
+let year = 2025;
 for (let month=1; month<=12; month++){
-    await create_todo_page(notion, month, "44bd2206c597409a94fbe90f5de120fa");
+    await create_todo_page(notion, month, "16f18c9c1978805aae41f66498c11e16"); // MAKE SURE YOU CHANGE THIS TO THE ID OF THE NEW PAGE OR IT WILL OVERWRITE PREVIOUS DATA LEARNED THIS THE HARD WAY
 }
-
+console.info("Completed successfully");
 
 
 async function create_todo_page (client:any, month:number, parent_id:string ){
@@ -34,8 +34,8 @@ async function create_todo_page (client:any, month:number, parent_id:string ){
     let subpage_parent_id = response.id;
     const daysInMonth = month_as_date.getDate();
     let weeksInMonth = createNestedArray(daysInMonth);
-    let child_array = [];
     for (let week of weeksInMonth){
+        let child_array = [];
         for (let day of week){
             const day_as_string = new Date(year,month-1, day);
             child_array.push({
